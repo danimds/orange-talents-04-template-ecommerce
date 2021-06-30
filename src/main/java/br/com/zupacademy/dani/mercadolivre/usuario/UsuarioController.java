@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +18,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public ResponseEntity<?> cadastrarUsuario(@RequestBody UsuarioRequest request) {
+    public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid UsuarioRequest request) {
         Optional<Usuario> emailDuplicado = usuarioRepository.findByLogin(request.getLogin());
         if (emailDuplicado.isPresent()) {
             return ResponseEntity.badRequest().build();
